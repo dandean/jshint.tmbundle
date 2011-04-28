@@ -33,33 +33,32 @@ function html(s) {
 module.exports = function (options) {
   var file = env.TM_FILEPATH,
     input = fs.readFileSync(file, 'utf8'),
-    body = '',
-	lineClass = '';
+    output = '',
+	errors = 0,
+	warnings = 0,
+	append = '';
 
   //remove shebang
   input = input.replace(/^\#\!.*/, '');
 
   if (!JSHINT(input, options)) {
     JSHINT.errors.forEach(function(e) {
-      if (e) {
-		lineClass = inArray(e.reason, warningMsgs) ? 'warning' : 'error';
-        body += ('<a class="'+ lineClass +'" href="txmt://open?url=file://' + escape(file) + '&line=' + e.line + '&column=' + e.character + '">' + e.reason);
-		body += '<tt class="line"> Line ' + e.line + ' Char ' + e.character + '</tt>';
-        if (e.evidence && !isNaN(e.character)) {
-          body += '<tt>';
-          body += html(e.evidence.substring(0, e.character-1));
-          body += '<em>';
-          body += (e.character <= e.evidence.length) ? html(e.evidence.substring(e.character-1, e.character)) : '&nbsp;';
-          body += '</em>';
-          body += html(e.evidence.substring(e.character));
-          body += '</tt>';
-        }
-        body += '</a>';
-      }
+		if (e) {
+			if(inArray(e.reason, warningMsgs)){
+				warnings++;
+			} else if (~e.reason.indexOf('Stopping, unable to continue.')) {
+				append += e.reason;
+			} else {
+				errors++;
+			}
+		}
     });
-    fs.readFile(__dirname + '/output.html', 'utf8', function(e, html) {
-      sys.puts(html.replace('{body}', body));
-      process.exit(205); //show_html
-    });
+    if (warnings || errors) {
+		output = 'Errors: '+ errors + '\nWarnings: ' + warnings;
+		if(append){
+			output += '\n' + append;
+		}
+		sys.puts(output);
+    }
   }
 };

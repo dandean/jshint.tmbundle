@@ -2,12 +2,18 @@
 
 TextMate bundle for [JSHint](http://jshint.com/), the (Gentler) JavaScript Code Quality Tool.
 
-![Screenshot](https://github.com/downloads/fgnass/fgnass.github.com/jslint.png)
+This version provides a tool tip on save instead of spawning a new window containing errors. This interrupts your workflow less.
+
+![Screenshot - Validation screen](//dl.dropbox.com/u/3972536/Github%20Images/validationPopup.png)
+
+![Screenshot - Tooltip on save](//dl.dropbox.com/u/3972536/Github%20Images/toolTip.png)
 
 Features:
 
 * Pretty UI
-* Runs automatically upon save (⌘S)
+* Highlights critical errors
+* Runs tooltip automatically upon save (⌘S)
+* Validation screen opens on ⇧⌘V
 * Can be bypassed by pressing ⇧⌘S
 * Output is only shown when errors are found
 * Window is automatically closed when it looses focus
@@ -15,7 +21,7 @@ Features:
 
 ## Installation
 
-Download the [zip file](http://github.com/fgnass/jshint.tmbundle/zipball/master) and rename the
+Download the [zip file](https://github.com/MrNibbles/jshint.tmbundle/zipball/master) and rename the
 extracted folder to `jshint.tmbundle`. Double-click.
 
 ## Prerequisites
@@ -32,3 +38,4 @@ You can set the PATH either via Preferences → Advanced → Shell Variables or 
 
 * [Pierre Bertet](https://github.com/bpierre/)
 * [Rob-ot](https://github.com/Rob-ot/)
+* [Anthony Mann](https://github.com/MrNibbles/)
